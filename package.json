@@ -1,0 +1,40 @@
+{
+  "name": "enhanced-datachannel",
+  "version": "0.0.0",
+  "description": "enhance(RTCDataChannel) for general usage.",
+  "main": "TODO",
+  "module": "TODO",
+  "types": "TODO",
+  "scripts": {
+    "test": "karma start",
+    "test:watch": "karma start --no-single-run --auto-watch --no-browsers"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leader22/enhanced-datachannel.git"
+  },
+  "keywords": [
+    "datachannel",
+    "webrtc",
+    "promise"
+  ],
+  "author": "Yuji Sugiura",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leader22/enhanced-datachannel/issues"
+  },
+  "homepage": "https://github.com/leader22/enhanced-datachannel#readme",
+  "devDependencies": {
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "jasmine": "^3.4.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-firefox-launcher": "^1.1.0",
+    "karma-jasmine": "^2.0.1",
+    "karma-mocha-reporter": "^2.2.5",
+    "karma-safari-launcher": "^1.0.0",
+    "prettier": "^1.18.2",
+    "typescript": "^3.5.3"
+  }
+}
