@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "moduleResolution": "node",
+    "esModuleInterop": true,
     "module": "commonjs",
     "outDir": "./lib",
     "removeComments": true,
