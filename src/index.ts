@@ -15,23 +15,11 @@ export function promised(dc: RTCDataChannel) {
   if (!dc.ordered) {
     throw new Error("The ordered property must be true!");
   }
-  if (!_isReliable(dc)) {
-    throw new Error("The reliable property must be true!");
-  }
+  // NOTE: should check dc.reliable or NOT here
+  // but Safari does not have its property and no idea to know it...
   return new PromisedDataChannel(dc);
 }
 
 // export function chunked(dc: RTCDataChannel) {
 //   return new ChunkedDataChannel(dc);
 // };
-
-function _isReliable(dc: RTCDataChannel): boolean {
-  // Chrome, Firefox
-  if ("reliable" in dc) {
-    // @ts-ignore: not in the spec and typed but exists...
-    return dc.reliable;
-  }
-
-  // Safari
-  return dc.maxRetransmits === null && dc.maxPacketLifeTime === null;
-}

@@ -25,12 +25,6 @@ describe("exports#promised()", () => {
     expect(() => promised(dc)).toThrowError(/ordered/);
   });
 
-  it("should throw w/ valid argument but reliable = false", () => {
-    const pc = new RTCPeerConnection();
-    const dc = pc.createDataChannel("x", { maxRetransmits: 1 });
-    expect(() => promised(dc)).toThrowError(/reliable/);
-  });
-
   it("should not throw w/ valid argument", () => {
     const pc = new RTCPeerConnection();
     const dc = pc.createDataChannel("x");
