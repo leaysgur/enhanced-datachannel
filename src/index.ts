@@ -1,6 +1,9 @@
 import BasedDataChannel from "./based-datachannel";
 import PromisedDataChannel from "./promised-datachannel";
 import ChunkedDataChannel from "./chunked-datachannel";
+import $debug from "debug";
+
+const debug = $debug("enhanced-dc");
 
 export function based(dc: RTCDataChannel) {
   if (dc instanceof RTCDataChannel === false) {
@@ -29,7 +32,8 @@ export function chunked(dc: RTCDataChannel) {
     throw new Error("The ordered property must be true!");
   }
   if (dc.binaryType !== "arraybuffer") {
-    throw new Error("The binaryType property must be arraybuffer!");
+    debug(`change binaryType ${dc.binaryType} -> arraybuffer`);
+    dc.binaryType = "arraybuffer";
   }
   // NOTE: should check dc.reliable or NOT here
   // but Safari does not have its property and no idea to know it...
