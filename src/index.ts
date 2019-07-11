@@ -12,10 +12,26 @@ export function promised(dc: RTCDataChannel) {
   if (dc instanceof RTCDataChannel === false) {
     throw new Error("Missing datachannel instance!");
   }
-  // TODO: must be reliable
+  if (!dc.ordered) {
+    throw new Error("The ordered property must be true!");
+  }
+  if (!_isReliable(dc)) {
+    throw new Error("The reliable property must be true!");
+  }
   return new PromisedDataChannel(dc);
 }
 
 // export function chunked(dc: RTCDataChannel) {
 //   return new ChunkedDataChannel(dc);
 // };
+
+function _isReliable(dc: RTCDataChannel): boolean {
+  // Chrome, Firefox
+  if ("reliable" in dc) {
+    // @ts-ignore: not typed but exists
+    return dc.reliable;
+  }
+
+  // Safari
+  return dc.maxRetransmits === null && dc.maxPacketLifeTime === null;
+}
