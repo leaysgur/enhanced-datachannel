@@ -55,12 +55,13 @@ class PromisedDataChannel extends BasedDataChannel {
     for (const sentRequest of this._sentRequests.values()) {
       sentRequest.close();
     }
+    this._sentRequests.clear();
 
     super.close();
   }
 
   async send(data: JSONValue): Promise<JSONValue> {
-    debug("sendPromise()", data);
+    debug("send()", data);
 
     if (this._closed) {
       throw new Error("Closed!");
@@ -83,17 +84,25 @@ class PromisedDataChannel extends BasedDataChannel {
 
       const sentRequest = {
         timer: window.setTimeout(() => {
+          if (!this._sentRequests.delete(request.id)) return;
+
           reject(new Error("Timeout!"));
         }, timeout),
         resolve: (res: JSONValue) => {
+          if (!this._sentRequests.delete(request.id)) return;
+
           window.clearTimeout(sentRequest.timer);
           resolve(res);
         },
         reject: (err: Error) => {
+          if (!this._sentRequests.delete(request.id)) return;
+
           window.clearTimeout(sentRequest.timer);
           reject(err);
         },
         close: () => {
+          if (!this._sentRequests.delete(request.id)) return;
+
           window.clearTimeout(sentRequest.timer);
           reject(new Error("Closed!"));
         }
@@ -155,8 +164,6 @@ class PromisedDataChannel extends BasedDataChannel {
       debug("sent request not found...");
       return;
     }
-
-    this._sentRequests.delete(response.id);
 
     if ("err" in response) {
       return sentRequest.reject(new Error(response.err));
