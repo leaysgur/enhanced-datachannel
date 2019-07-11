@@ -28,6 +28,11 @@ class ChunkedDataChannel extends BasedDataChannel {
   close() {
     debug("close()");
 
+    this._sending = false;
+
+    this._recving = false;
+    this._recvBuffer.length = 0;
+
     super.close();
   }
 
