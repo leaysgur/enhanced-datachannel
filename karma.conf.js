@@ -12,6 +12,7 @@ module.exports = config =>
     },
     rollupPreprocessor: {
       plugins: [
+        require("rollup-plugin-typescript"),
         require("rollup-plugin-node-resolve")({ browser: true }),
         require("rollup-plugin-commonjs")()
       ],
