@@ -8,8 +8,11 @@ const PAYLOAD_TYPES = {
   ERROR_RESPONSE: 2
 };
 
-type JSONValue =  boolean | number | string | null | JSONArray | JSONObject;
-interface JSONObject {  [key: string]: JSONValue; }
+type JSONValue = boolean | number | string | null | JSONArray | JSONObject;
+interface JSONObject {
+  [key: string]: JSONValue;
+}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface JSONArray extends Array<JSONValue> {}
 
 interface SentRequest {
@@ -145,7 +148,7 @@ class PromisedDataChannel extends BasedDataChannel {
 
     this._sentRequests.delete(response.id);
 
-    if ('err' in response) {
+    if ("err" in response) {
       return sentRequest.reject(new Error(response.err));
     }
 

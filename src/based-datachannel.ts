@@ -48,6 +48,7 @@ class BasedDataChannel extends EventEmitter {
     this.removeAllListeners();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   send(data: any) {
     debug("send()", data);
 
