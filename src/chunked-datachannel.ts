@@ -25,6 +25,10 @@ class ChunkedDataChannel extends BasedDataChannel {
     this._recvBuffer = [];
   }
 
+  set binaryType(_type: string) {
+    throw new Error("Can not change binaryType!");
+  }
+
   close() {
     debug("close()");
 

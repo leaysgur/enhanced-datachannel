@@ -28,6 +28,9 @@ export function chunked(dc: RTCDataChannel) {
   if (!dc.ordered) {
     throw new Error("The ordered property must be true!");
   }
+  if (dc.binaryType !== "arraybuffer") {
+    throw new Error("The binaryType property must be arraybuffer!");
+  }
   // NOTE: should check dc.reliable or NOT here
   // but Safari does not have its property and no idea to know it...
   return new ChunkedDataChannel(dc);
