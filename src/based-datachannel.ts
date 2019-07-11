@@ -26,6 +26,45 @@ class BasedDataChannel extends EventEmitter {
     }
   }
 
+  get binaryType() {
+    return this._dc.binaryType;
+  }
+  set binaryType(type: string) {
+    this._dc.binaryType = type;
+  }
+  get bufferedAmountLowThreshold() {
+    return this._dc.bufferedAmountLowThreshold;
+  }
+  set bufferedAmountLowThreshold(threshold: number) {
+    this._dc.bufferedAmountLowThreshold = threshold;
+  }
+  get bufferedAmount() {
+    return this._dc.bufferedAmount;
+  }
+  get id() {
+    return this._dc.id;
+  }
+  get label() {
+    return this._dc.label;
+  }
+  get maxPacketLifeTime() {
+    return this._dc.maxPacketLifeTime;
+  }
+  get maxRetransmits() {
+    return this._dc.maxRetransmits;
+  }
+  get negotiated() {
+    return this._dc.negotiated;
+  }
+  get ordered() {
+    return this._dc.ordered;
+  }
+  get priority() {
+    return this._dc.priority;
+  }
+  get protocol() {
+    return this._dc.protocol;
+  }
   get readyState() {
     return this._dc.readyState;
   }

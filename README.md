@@ -5,8 +5,6 @@ enhance(RTCDataChannel) for general usage.
 
 ## TODO
 
-- test
-- getter/setter
 - chunked
 - docs
 - publish
