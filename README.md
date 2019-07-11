@@ -1,5 +1,6 @@
 # enhanced-datachannel
-enhance(RTCDataChannel) for general usage.
+
+Wanna `enhance(RTCDataChannel)` for general usage.
 
 ## Install
 
@@ -7,10 +8,14 @@ enhance(RTCDataChannel) for general usage.
 npm i enhanced-datachannel
 ```
 
+## Exports
+
 ```js
 import { based, promised } from "enhanced-datachannel";
 
 const pc = new RTCPeerConnection();
+
+// ...
 
 const dc = pc.createDataChannel("mych");
 // or
@@ -76,10 +81,3 @@ console.log(res); // "Thank you!"
 ```
 
 If recv side does not `resolve()` neither nor `reject()`, it is treated as `reject()` with timeout.
-
-## TODO
-
-- chunked
-- publish
-- check install
-  - use webpack to run it
