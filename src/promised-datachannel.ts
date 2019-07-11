@@ -49,6 +49,16 @@ class PromisedDataChannel extends BasedDataChannel {
     this._sentRequests = new Map();
   }
 
+  close() {
+    debug("close()");
+
+    for (const sentRequest of this._sentRequests.values()) {
+      sentRequest.close();
+    }
+
+    super.close();
+  }
+
   async send(data: JSONValue): Promise<JSONValue> {
     debug("sendPromise()", data);
 
