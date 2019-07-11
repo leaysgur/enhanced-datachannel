@@ -1,4 +1,5 @@
 import { based } from "../lib";
+import { connectDC } from "./utils";
 
 let dc;
 let bdc;
@@ -33,6 +34,22 @@ describe("BasedDataChannel#constructor", () => {
 describe("BasedDataChannel#send()", () => {
   it("should throw before open", () => {
     expect(() => bdc.send("hi")).toThrowError(/Not open/);
+  });
+
+  it("should send()", async done => {
+    const [dc1, dc2] = await connectDC().catch(done.fail);
+    const bdc1 = based(dc1);
+    const bdc2 = based(dc2);
+
+    bdc1.once("message", data => {
+      expect(data).toBe("hello");
+      bdc1.send("world");
+    });
+    bdc2.once("message", data => {
+      expect(data).toBe("world");
+      done();
+    });
+    bdc2.send("hello");
   });
 });
 
