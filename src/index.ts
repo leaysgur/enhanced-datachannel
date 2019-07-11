@@ -28,7 +28,7 @@ export function promised(dc: RTCDataChannel) {
 function _isReliable(dc: RTCDataChannel): boolean {
   // Chrome, Firefox
   if ("reliable" in dc) {
-    // @ts-ignore: not typed but exists
+    // @ts-ignore: not in the spec and typed but exists...
     return dc.reliable;
   }
 

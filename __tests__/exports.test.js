@@ -19,13 +19,16 @@ describe("exports#promised()", () => {
     expect(() => promised({})).toThrowError(/Missing/);
   });
 
-  it("should throw w/ valid argument but invalid settings", () => {
+  it("should throw w/ valid argument but ordered = false", () => {
     const pc = new RTCPeerConnection();
-    const dc1 = pc.createDataChannel("x", { ordered: false });
-    expect(() => promised(dc1)).toThrowError(/ordered/);
+    const dc = pc.createDataChannel("x", { ordered: false });
+    expect(() => promised(dc)).toThrowError(/ordered/);
+  });
 
-    const dc2 = pc.createDataChannel("x", { maxRetransmits: 1 });
-    expect(() => promised(dc2)).toThrowError(/reliable/);
+  it("should throw w/ valid argument but reliable = false", () => {
+    const pc = new RTCPeerConnection();
+    const dc = pc.createDataChannel("x", { maxRetransmits: 1 });
+    expect(() => promised(dc)).toThrowError(/reliable/);
   });
 
   it("should not throw w/ valid argument", () => {
