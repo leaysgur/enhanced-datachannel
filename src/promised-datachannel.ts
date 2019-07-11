@@ -72,19 +72,19 @@ class PromisedDataChannel extends BasedDataChannel {
       const timeout = 1000 + 500 * this._sentRequests.size;
 
       const sentRequest = {
-        timer: setTimeout(() => {
+        timer: window.setTimeout(() => {
           reject(new Error("Timeout!"));
         }, timeout),
         resolve: (res: JSONValue) => {
-          clearTimeout(sentRequest.timer);
+          window.clearTimeout(sentRequest.timer);
           resolve(res);
         },
         reject: (err: Error) => {
-          clearTimeout(sentRequest.timer);
+          window.clearTimeout(sentRequest.timer);
           reject(err);
         },
         close: () => {
-          clearTimeout(sentRequest.timer);
+          window.clearTimeout(sentRequest.timer);
           reject(new Error("Closed!"));
         }
       };
