@@ -49,10 +49,10 @@ class PromisedDataChannel extends BasedDataChannel {
   async send(data: JSONValue): Promise<JSONValue> {
     debug("sendPromise()", data);
 
-    if (this.closed) {
+    if (this._closed) {
       throw new Error("Closed!");
     }
-    if (this.readyState !== "open") {
+    if (this._dc.readyState !== "open") {
       throw new Error("Not opened!");
     }
 

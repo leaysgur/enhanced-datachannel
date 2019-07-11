@@ -13,7 +13,7 @@ const dataChannelEvents = [
 
 class BasedDataChannel extends EventEmitter {
   protected _dc: RTCDataChannel;
-  private _closed: boolean;
+  protected _closed: boolean;
 
   constructor(dc: RTCDataChannel) {
     super();
@@ -49,11 +49,20 @@ class BasedDataChannel extends EventEmitter {
   }
 
   send(data: any) {
+    debug("send()", data);
+
+    if (this._closed) {
+      throw new Error("Closed!");
+    }
+    if (this._dc.readyState !== "open") {
+      throw new Error("Not opened!");
+    }
+
     this._dc.send(data);
   }
 
   handleEvent(ev: Event) {
-    if (this.closed) return;
+    if (this._closed) return;
 
     switch (ev.type) {
       case "open":
