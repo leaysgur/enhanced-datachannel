@@ -18,6 +18,35 @@ describe("BasedDataChannel#constructor", () => {
     expect(bdc.closed).toBeFalsy();
   });
 
+  it("should get props", () => {
+    [
+      "binaryType",
+      "bufferedAmountLowThreshold",
+      "bufferedAmount",
+      "id",
+      "label",
+      "maxPacketLifeTime",
+      "maxRetransmits",
+      "negotiated",
+      "ordered",
+      // seems not to be implemented yet
+      // "priority",
+      "protocol",
+      "readyState"
+    ].forEach(prop => {
+      // should be assigned or null
+      expect(bdc[prop]).not.toBeUndefined();
+    });
+  });
+
+  it("should set props", () => {
+    bdc.binaryType = "arraybuffer";
+    expect(bdc.binaryType).toBe("arraybuffer");
+
+    bdc.bufferedAmountLowThreshold = 10;
+    expect(bdc.bufferedAmountLowThreshold).toBe(10);
+  });
+
   it("should listen events and emit them", async () => {
     await Promise.all(
       ["open", "close", "error", "message", "bufferedamountlow"].map(evName => {
