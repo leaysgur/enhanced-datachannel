@@ -2,9 +2,11 @@
   "name": "enhanced-datachannel",
   "version": "0.0.0",
   "description": "Wanna `enhance(RTCDataChannel)` for general usage.",
-  "main": "./lib",
-  "module": "./lib",
-  "types": "./lib",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "tsc -p .",
     "lint": "eslint . --ext=js,ts && tsc -p . --noEmit",
