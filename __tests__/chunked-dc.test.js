@@ -17,7 +17,7 @@ afterEach(() => {
 // should send only blob or file
 // should ignore empty
 
-fdescribe("ChunkedDataChannel#constructor()", () => {
+describe("ChunkedDataChannel#constructor()", () => {
   it("should not change binaryType", () => {
     // default
     expect(cdc.binaryType).toBe("arraybuffer");
@@ -27,7 +27,7 @@ fdescribe("ChunkedDataChannel#constructor()", () => {
   });
 });
 
-fdescribe("ChunkedDataChannel#send()", () => {
+describe("ChunkedDataChannel#send()", () => {
   it("should return Promise<T>", () => {
     expect(cdc.send() instanceof Promise).toBeTruthy();
   });

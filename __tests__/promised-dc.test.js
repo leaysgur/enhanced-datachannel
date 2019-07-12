@@ -14,6 +14,19 @@ afterEach(() => {
 });
 
 describe("PromisedDataChannel#send()", () => {
+  let pdc1;
+  let pdc2;
+  beforeEach(async () => {
+    const [dc1, dc2] = await connectDC();
+    pdc1 = promised(dc1);
+    pdc2 = promised(dc2);
+  });
+  afterEach(() => {
+    pdc1.close();
+    pdc2.close();
+    pdc1 = pdc2 = null;
+  });
+
   it("should return Promise<T>", async () => {
     expect(pdc.send() instanceof Promise).toBeTruthy();
   });
@@ -27,10 +40,6 @@ describe("PromisedDataChannel#send()", () => {
   });
 
   it("should send() JSON like object", async done => {
-    const [dc1, dc2] = await connectDC().catch(done.fail);
-    const pdc1 = promised(dc1);
-    const pdc2 = promised(dc2);
-
     pdc2.once("message", data => {
       expect(data).toEqual({ i: { ate: [2, "cakes"] } });
       done();
@@ -39,10 +48,6 @@ describe("PromisedDataChannel#send()", () => {
   });
 
   it("should await send()", async done => {
-    const [dc1, dc2] = await connectDC().catch(done.fail);
-    const pdc1 = promised(dc1);
-    const pdc2 = promised(dc2);
-
     pdc1.once("message", (data, resolve) => {
       expect(data).toBe("hello");
       resolve("world");
@@ -53,10 +58,6 @@ describe("PromisedDataChannel#send()", () => {
   });
 
   it("should await send().catch(reason)", async done => {
-    const [dc1, dc2] = await connectDC().catch(done.fail);
-    const pdc1 = promised(dc1);
-    const pdc2 = promised(dc2);
-
     pdc1.once("message", (data, resolve, reject) => {
       reject(new Error("NG!"));
     });
@@ -67,9 +68,6 @@ describe("PromisedDataChannel#send()", () => {
   });
 
   it("should await send().catch(timeout)", async done => {
-    const [dc1] = await connectDC().catch(done.fail);
-    const pdc1 = promised(dc1);
-
     await pdc1.send("OK?").catch(err => {
       expect(err).toMatch(/Timeout/);
       done();
@@ -77,10 +75,6 @@ describe("PromisedDataChannel#send()", () => {
   });
 
   it("should manage internal _sentRequests", async done => {
-    const [dc1, dc2] = await connectDC().catch(done.fail);
-    const pdc1 = promised(dc1);
-    const pdc2 = promised(dc2);
-
     pdc2.on("message", (data, resolve, reject) =>
       ({
         1: resolve,
