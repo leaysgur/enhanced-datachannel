@@ -34,6 +34,8 @@ const promisedDC = promised(dc);
 const chunkedDC = chunked(dc);
 ```
 
+Passed instance should be `reliable` and `ordered` mode.
+
 ## API
 
 ### BasedDataChannel
@@ -50,6 +52,8 @@ This class has the same properties which `RTCDataChannel` instance has.
 - `label`
 - `binaryType`
 - etc...
+
+See [spec](https://w3c.github.io/webrtc-pc/#rtcdatachannel) for the detail.
 
 and also emits the same event types via `EventEmitter`.
 
