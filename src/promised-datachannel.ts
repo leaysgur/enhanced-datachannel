@@ -112,11 +112,11 @@ class PromisedDataChannel extends BasedDataChannel {
     });
   }
 
-  _sendMessage(data: SendPayload) {
+  private _sendMessage(data: SendPayload) {
     this._dc.send(JSON.stringify(data));
   }
 
-  _handleMessage(ev: MessageEvent) {
+  protected _handleMessage(ev: MessageEvent) {
     const evData: SendPayload = JSON.parse(ev.data);
     switch (evData.type) {
       case PAYLOAD_TYPES.REQUEST:
@@ -128,7 +128,7 @@ class PromisedDataChannel extends BasedDataChannel {
   }
 
   // on("message", (data, resolve, reject) => {})
-  _handleRequest(request: Request) {
+  private _handleRequest(request: Request) {
     try {
       this.emit(
         "message",
@@ -157,7 +157,7 @@ class PromisedDataChannel extends BasedDataChannel {
     }
   }
 
-  _handleResponse(response: SuccessResponse | ErrorResponse) {
+  private _handleResponse(response: SuccessResponse | ErrorResponse) {
     const sentRequest = this._sentRequests.get(response.id);
 
     if (!sentRequest) {

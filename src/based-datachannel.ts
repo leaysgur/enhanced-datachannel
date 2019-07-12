@@ -122,23 +122,23 @@ class BasedDataChannel extends EventEmitter {
     }
   }
 
-  _handleOpen() {
+  protected _handleOpen() {
     this.emit("open");
   }
 
-  _handleClose() {
+  protected _handleClose() {
     this.emit("close");
   }
 
-  _handleError(ev: RTCErrorEvent) {
+  protected _handleError(ev: RTCErrorEvent) {
     this.emit("error", ev.error);
   }
 
-  _handleMessage(ev: MessageEvent) {
+  protected _handleMessage(ev: MessageEvent) {
     this.emit("message", ev.data);
   }
 
-  _handleBufferedAmountLow() {
+  protected _handleBufferedAmountLow() {
     this.emit("bufferedamountlow");
   }
 }

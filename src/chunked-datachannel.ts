@@ -18,18 +18,23 @@ interface JSONObject {
 interface JSONArray extends Array<JSONValue> {}
 
 class ChunkedDataChannel extends BasedDataChannel {
-  _sending: boolean;
-
-  _recving: boolean;
-  _recvBuffer: ArrayBuffer[];
+  private _sending: boolean;
+  private _recving: boolean;
+  private _recvBuffer: ArrayBuffer[];
 
   constructor(dc: RTCDataChannel) {
     super(dc);
 
     this._sending = false;
-
     this._recving = false;
     this._recvBuffer = [];
+  }
+
+  get sending() {
+    return this._sending;
+  }
+  get recving() {
+    return this._recving;
   }
 
   set binaryType(_type: string) {
@@ -43,7 +48,6 @@ class ChunkedDataChannel extends BasedDataChannel {
     debug("close()");
 
     this._sending = false;
-
     this._recving = false;
     this._recvBuffer.length = 0;
 
@@ -113,16 +117,19 @@ class ChunkedDataChannel extends BasedDataChannel {
     });
   }
 
-  _handleMessage(ev: MessageEvent) {
+  protected _handleMessage(ev: MessageEvent) {
     const { data } = ev;
     if (!(typeof data === "string" || data instanceof ArrayBuffer)) return;
 
+    // handle string
     if (typeof data === "string") {
       const { type, meta } = JSON.parse(data);
+
       if (type === META_TYPES.START) {
         debug("start recving");
         this._recving = true;
       }
+
       if (type === META_TYPES.END) {
         debug("end recving");
         this.emit("message", new Blob(this._recvBuffer), meta);
