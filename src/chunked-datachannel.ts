@@ -10,6 +10,13 @@ const META_TYPES = {
   END: "END"
 };
 
+type JSONValue = boolean | number | string | null | JSONArray | JSONObject;
+interface JSONObject {
+  [key: string]: JSONValue;
+}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface JSONArray extends Array<JSONValue> {}
+
 class ChunkedDataChannel extends BasedDataChannel {
   _sending: boolean;
 
@@ -43,8 +50,8 @@ class ChunkedDataChannel extends BasedDataChannel {
     super.close();
   }
 
-  async send(data: Blob): Promise<void> {
-    debug("send()", data);
+  async send(data: Blob, meta: JSONObject = {}): Promise<void> {
+    debug("send()", data, meta);
 
     if (this._closed) {
       throw new Error("Closed!");
@@ -91,7 +98,7 @@ class ChunkedDataChannel extends BasedDataChannel {
           readSlice(offset);
         } else {
           debug("signal end sending");
-          this._dc.send(META_TYPES.END);
+          this._dc.send(JSON.stringify({ type: META_TYPES.END, meta }));
 
           fileReader.onerror = fileReader.onabort = fileReader.onload = null;
           this._sending = false;
@@ -101,7 +108,7 @@ class ChunkedDataChannel extends BasedDataChannel {
 
       debug("signal start sending");
       this._sending = true;
-      this._dc.send(META_TYPES.START);
+      this._dc.send(JSON.stringify({ type: META_TYPES.START }));
       readSlice(0);
     });
   }
@@ -111,13 +118,14 @@ class ChunkedDataChannel extends BasedDataChannel {
     if (!(typeof data === "string" || data instanceof ArrayBuffer)) return;
 
     if (typeof data === "string") {
-      if (data === META_TYPES.START) {
+      const { type, meta } = JSON.parse(data);
+      if (type === META_TYPES.START) {
         debug("start recving");
         this._recving = true;
       }
-      if (data === META_TYPES.END) {
+      if (type === META_TYPES.END) {
         debug("end recving");
-        this.emit("message", new Blob(this._recvBuffer));
+        this.emit("message", new Blob(this._recvBuffer), meta);
 
         this._recving = false;
         this._recvBuffer.length = 0;

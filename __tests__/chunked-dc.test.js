@@ -23,7 +23,7 @@ describe("ChunkedDataChannel#constructor()", () => {
   });
 });
 
-fdescribe("ChunkedDataChannel#send()", () => {
+describe("ChunkedDataChannel#send()", () => {
   let cdc1;
   let cdc2;
   beforeEach(async () => {
@@ -107,6 +107,15 @@ fdescribe("ChunkedDataChannel#send()", () => {
       done();
     });
     await cdc2.send(createBlob(1234567));
+  });
+
+  it("should emit Blob and meta", async done => {
+    cdc1.once("message", (blob, meta) => {
+      expect(blob.size).toBe(2000);
+      expect(meta).toEqual({ file: "name" });
+      done();
+    });
+    await cdc2.send(createFile(2000), { file: "name" });
   });
 
   it("should throw send in parallel", async () => {
