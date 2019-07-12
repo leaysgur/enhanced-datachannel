@@ -32,15 +32,24 @@ describe("BasedDataChannel#constructor", () => {
 });
 
 describe("BasedDataChannel#send()", () => {
+  let bdc1;
+  let bdc2;
+  beforeEach(async () => {
+    const [dc1, dc2] = await connectDC();
+    bdc1 = based(dc1);
+    bdc2 = based(dc2);
+  });
+  afterEach(() => {
+    bdc1.close();
+    bdc2.close();
+    bdc1 = bdc2 = null;
+  });
+
   it("should throw before open", () => {
     expect(() => bdc.send("hi")).toThrowError(/Not open/);
   });
 
   it("should send()", async done => {
-    const [dc1, dc2] = await connectDC().catch(done.fail);
-    const bdc1 = based(dc1);
-    const bdc2 = based(dc2);
-
     bdc1.once("message", data => {
       expect(data).toBe("hello");
       bdc1.send("world");
@@ -50,6 +59,11 @@ describe("BasedDataChannel#send()", () => {
       done();
     });
     bdc2.send("hello");
+  });
+
+  it("should not send() after close()", () => {
+    bdc1.close();
+    expect(() => bdc1.send()).toThrowError(/Closed/);
   });
 });
 
