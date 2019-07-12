@@ -28,6 +28,9 @@ class ChunkedDataChannel extends BasedDataChannel {
   set binaryType(_type: string) {
     throw new Error("Can not change binaryType!");
   }
+  get binaryType() {
+    return this._dc.binaryType;
+  }
 
   close() {
     debug("close()");
