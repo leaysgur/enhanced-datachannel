@@ -35,3 +35,12 @@ export function connectDC() {
     })().catch(reject);
   });
 }
+
+export function createBlob(size) {
+  return new Blob([new ArrayBuffer(size)]);
+}
+
+export function createFile(size) {
+  const blob = createBlob(size);
+  return new File([blob], "dummy");
+}
