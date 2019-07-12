@@ -44,7 +44,7 @@ class ChunkedDataChannel extends BasedDataChannel {
   }
 
   async send(data: Blob): Promise<void> {
-    debug(`send() ${data.size}bytes`);
+    debug("send()", data);
 
     if (this._closed) {
       throw new Error("Closed!");
@@ -62,6 +62,8 @@ class ChunkedDataChannel extends BasedDataChannel {
     if (data.size === 0) {
       throw new Error("Empty file!");
     }
+
+    debug(`data has ${data.size}bytes`);
 
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
