@@ -1,6 +1,6 @@
 {
   "name": "enhanced-datachannel",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Wanna `enhance(RTCDataChannel)` for general usage.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
