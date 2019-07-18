@@ -1,5 +1,11 @@
 # ChangeLlog
 
+## [1.1.1] - 2019-07-18
+
+### Changed
+
+- Update dev dependencies.
+
 ## [1.1.0] - 2019-07-12
 
 ### Added
