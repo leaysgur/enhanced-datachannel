@@ -1,5 +1,11 @@
 # ChangeLlog
 
+## [1.2.0] - 2019-07-22
+
+### Added
+
+- Add typings for an instance
+
 ## [1.1.1] - 2019-07-18
 
 ### Changed
