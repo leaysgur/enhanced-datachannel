@@ -1,5 +1,11 @@
 # ChangeLlog
 
+## [1.2.1] - 2019-07-23
+
+### Changed
+
+- Do not strict typing JSON argument
+
 ## [1.2.0] - 2019-07-22
 
 ### Added
@@ -30,6 +36,8 @@
 
 - Released!
 
+[1.2.1]: https://github.com/leader22/enhanced-datachannel/releases/tag/v1.2.1
+[1.2.0]: https://github.com/leader22/enhanced-datachannel/releases/tag/v1.2.0
 [1.1.0]: https://github.com/leader22/enhanced-datachannel/releases/tag/v1.1.0
 [1.0.1]: https://github.com/leader22/enhanced-datachannel/releases/tag/v1.0.1
 [1.0.0]: https://github.com/leader22/enhanced-datachannel/releases/tag/v1.0.0
