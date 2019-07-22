@@ -39,3 +39,7 @@ export function chunked(dc: RTCDataChannel) {
   // but Safari does not have its property and no idea to know it...
   return new ChunkedDataChannel(dc);
 }
+
+export type BasedDataChannel = InstanceType<typeof BasedDataChannel>;
+export type PromisedDataChannel = InstanceType<typeof PromisedDataChannel>;
+export type ChunkedDataChannel = InstanceType<typeof ChunkedDataChannel>;
