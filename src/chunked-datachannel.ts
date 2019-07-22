@@ -10,13 +10,6 @@ const META_TYPES = {
   END: "END"
 };
 
-type JSONValue = boolean | number | string | null | JSONArray | JSONObject;
-interface JSONObject {
-  [key: string]: JSONValue;
-}
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface JSONArray extends Array<JSONValue> {}
-
 class ChunkedDataChannel extends BasedDataChannel {
   private _sending: boolean;
   private _recving: boolean;
@@ -54,7 +47,8 @@ class ChunkedDataChannel extends BasedDataChannel {
     super.close();
   }
 
-  async send(data: Blob, meta: JSONObject = {}): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async send(data: Blob, meta: any = {}): Promise<void> {
     debug("send()", data, meta);
 
     if (this._closed) {
@@ -72,6 +66,11 @@ class ChunkedDataChannel extends BasedDataChannel {
     }
     if (data.size === 0) {
       throw new Error("Empty file!");
+    }
+    try {
+      JSON.stringify(meta);
+    } catch (err) {
+      throw new Error("Can not convert to JSON!");
     }
 
     debug(`data has ${data.size}bytes`);

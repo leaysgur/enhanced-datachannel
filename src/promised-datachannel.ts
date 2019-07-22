@@ -8,16 +8,10 @@ const PAYLOAD_TYPES = {
   ERROR_RESPONSE: 2
 };
 
-type JSONValue = boolean | number | string | null | JSONArray | JSONObject;
-interface JSONObject {
-  [key: string]: JSONValue;
-}
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface JSONArray extends Array<JSONValue> {}
-
 interface SentRequest {
   timer: number;
-  resolve: (res: JSONValue) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resolve: (res: any) => void;
   reject: (err: Error) => void;
   close: () => void;
 }
@@ -25,12 +19,14 @@ interface SentRequest {
 interface Request {
   type: number;
   id: string;
-  data: JSONValue;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any;
 }
 interface SuccessResponse {
   type: number;
   id: string;
-  data: JSONValue;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any;
 }
 interface ErrorResponse {
   type: number;
@@ -60,7 +56,8 @@ class PromisedDataChannel extends BasedDataChannel {
     super.close();
   }
 
-  async send(data: JSONValue): Promise<JSONValue> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async send(data: any): Promise<any> {
     debug("send()", data);
 
     if (this._closed) {
@@ -77,7 +74,13 @@ class PromisedDataChannel extends BasedDataChannel {
       data
     };
 
-    this._sendMessage(request);
+    let requestJSON: string;
+    try {
+      requestJSON = JSON.stringify(request);
+    } catch (err) {
+      throw new Error("Can not convert to JSON!");
+    }
+    this._dc.send(requestJSON);
 
     return new Promise((resolve, reject) => {
       const timeout = 1000 + 500 * this._sentRequests.size;
@@ -88,7 +91,8 @@ class PromisedDataChannel extends BasedDataChannel {
 
           reject(new Error("Timeout!"));
         }, timeout),
-        resolve: (res: JSONValue) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        resolve: (res: any) => {
           if (!this._sentRequests.delete(request.id)) return;
 
           window.clearTimeout(sentRequest.timer);
@@ -112,10 +116,6 @@ class PromisedDataChannel extends BasedDataChannel {
     });
   }
 
-  private _sendMessage(data: SendPayload) {
-    this._dc.send(JSON.stringify(data));
-  }
-
   protected _handleMessage(ev: MessageEvent) {
     const evData: SendPayload = JSON.parse(ev.data);
     switch (evData.type) {
@@ -133,27 +133,38 @@ class PromisedDataChannel extends BasedDataChannel {
       this.emit(
         "message",
         request.data,
-        (data: JSONValue) => {
-          this._sendMessage({
-            type: PAYLOAD_TYPES.SUCCESS_RESPONSE,
-            id: request.id,
-            data
-          });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (data: any) => {
+          let responseJSON: string;
+          try {
+            responseJSON = JSON.stringify({
+              type: PAYLOAD_TYPES.SUCCESS_RESPONSE,
+              id: request.id,
+              data
+            });
+          } catch (err) {
+            throw new Error("Can not convert to JSON!");
+          }
+          this._dc.send(responseJSON);
         },
         (err: Error) => {
-          this._sendMessage({
-            type: PAYLOAD_TYPES.ERROR_RESPONSE,
-            id: request.id,
-            err: err.toString()
-          });
+          this._dc.send(
+            JSON.stringify({
+              type: PAYLOAD_TYPES.ERROR_RESPONSE,
+              id: request.id,
+              err: err.toString()
+            })
+          );
         }
       );
     } catch (err) {
-      this._sendMessage({
-        type: PAYLOAD_TYPES.ERROR_RESPONSE,
-        id: request.id,
-        err: err.toString()
-      });
+      this._dc.send(
+        JSON.stringify({
+          type: PAYLOAD_TYPES.ERROR_RESPONSE,
+          id: request.id,
+          err: err.toString()
+        })
+      );
     }
   }
 
