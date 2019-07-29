@@ -1,6 +1,6 @@
 # enhanced-datachannel
 
-Wanna `enhance(RTCDataChannel)` for general usage.
+The `enhance(RTCDataChannel)` functions for general usage.
 
 ## Install
 
@@ -8,7 +8,7 @@ Wanna `enhance(RTCDataChannel)` for general usage.
 npm i enhanced-datachannel
 ```
 
-You need to bundle it into your app.
+You need to bundle into your app using `webpack`, `rollup`, etc....
 
 ## Exports
 
@@ -34,7 +34,7 @@ const promisedDC = promised(dc);
 const chunkedDC = chunked(dc);
 ```
 
-Passed instance should be `reliable` and `ordered` mode.
+Passed `RTCDataChannel` instance should be `reliable` and `ordered` mode.
 
 ## API
 
@@ -83,22 +83,22 @@ Make it possible to `await dc.send(json)`.
 
 This class extends `BasedDataChannel`.
 
-But this class has special `send()` method and `on("message")` handler.
+And this class has special `send()` method and `on("message")` handler.
 
 ```js
 // recv
 promisedDC.on("message", (data, resolve, reject) => {
   try {
-    console.log(data); // "Take this!"
-    resolve("Thank you!");
+    console.log(data.msg); // "Take this!"
+    resolve({ res: "Thank you!" });
   } catch (err) {
     reject(err);
   }
 });
 
 // send
-const res = await promisedDC.send("Take this!");
-console.log(res); // "Thank you!"
+const data = await promisedDC.send({ msg: "Take this!" });
+console.log(data.res); // "Thank you!"
 ```
 
 If recv side does not `resolve()` neither nor `reject()`, it is treated as `reject()` with timeout.
@@ -113,7 +113,7 @@ Make it possible to send a large file.
 
 This class extends `BasedDataChannel`.
 
-But this class has special `send()` method and `on("message")` handler.
+And this class has special `send()` method and `on("message")` handler.
 
 ```js
 // recv
