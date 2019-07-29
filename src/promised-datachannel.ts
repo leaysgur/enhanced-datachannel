@@ -134,7 +134,7 @@ class PromisedDataChannel extends BasedDataChannel {
         "message",
         request.data,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (data: any) => {
+        (data?: any) => {
           let responseJSON: string;
           try {
             responseJSON = JSON.stringify({
