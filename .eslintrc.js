@@ -26,6 +26,7 @@ module.exports = {
     "no-lonely-if": "error",
     "prefer-const": "error",
 
+    "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-member-accessibility": [
       "error",
