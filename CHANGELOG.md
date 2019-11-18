@@ -1,5 +1,12 @@
 # ChangeLlog
 
+## [1.2.3] - 2019-11-18
+
+### Fixed
+
+- Use `maxPacketLifeTime`
+  - do not fallback `maxRetransmitTime` in Chrome
+
 ## [1.2.2] - 2019-07-29
 
 ### Changed
@@ -43,6 +50,7 @@
 
 - Released!
 
+[1.2.3]: https://github.com/leader22/enhanced-datachannel/releases/tag/v1.2.3
 [1.2.2]: https://github.com/leader22/enhanced-datachannel/releases/tag/v1.2.2
 [1.2.1]: https://github.com/leader22/enhanced-datachannel/releases/tag/v1.2.1
 [1.2.0]: https://github.com/leader22/enhanced-datachannel/releases/tag/v1.2.0
