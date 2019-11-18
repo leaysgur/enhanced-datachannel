@@ -48,11 +48,7 @@ class BasedDataChannel extends EventEmitter {
     return this._dc.label;
   }
   get maxPacketLifeTime() {
-    if ("maxPacketLifeTime" in this._dc) {
-      return this._dc.maxPacketLifeTime;
-    }
-    // @ts-ignore: for Chrome
-    return this._dc.maxRetransmitTime;
+    return this._dc.maxPacketLifeTime;
   }
   get maxRetransmits() {
     return this._dc.maxRetransmits;
