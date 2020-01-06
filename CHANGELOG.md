@@ -1,5 +1,11 @@
 # ChangeLlog
 
+## [1.2.4] - 2020-01-06
+
+### Misc
+
+- Update dev dependencies.
+
 ## [1.2.3] - 2019-11-18
 
 ### Fixed
@@ -28,7 +34,7 @@
 
 ## [1.1.1] - 2019-07-18
 
-### Changed
+### Misc
 
 - Update dev dependencies.
 
@@ -42,7 +48,7 @@
 
 ## [1.0.1] - 2019-07-12
 
-### Added
+### Misc
 
 - Misc for publishing.
 
@@ -50,6 +56,7 @@
 
 - Released!
 
+[1.2.4]: https://github.com/leader22/enhanced-datachannel/releases/tag/v1.2.4
 [1.2.3]: https://github.com/leader22/enhanced-datachannel/releases/tag/v1.2.3
 [1.2.2]: https://github.com/leader22/enhanced-datachannel/releases/tag/v1.2.2
 [1.2.1]: https://github.com/leader22/enhanced-datachannel/releases/tag/v1.2.1
