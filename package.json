@@ -39,7 +39,7 @@
     "karma": "^4.4.1",
     "karma-chrome-launcher": "^3.1.0",
     "karma-firefox-launcher": "^1.2.0",
-    "karma-jasmine": "^3.0.0",
+    "karma-jasmine": "2.0.1",
     "karma-mocha-reporter": "^2.2.5",
     "karma-rollup-preprocessor": "^7.0.2",
     "karma-safari-launcher": "^1.0.0",
@@ -47,7 +47,7 @@
     "rollup": "^1.28.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "typescript": "^3.7.4"
+    "typescript": "3.6.4"
   },
   "dependencies": {
     "debug": "^4.1.1",

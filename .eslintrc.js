@@ -32,6 +32,7 @@ module.exports = {
       "error",
       { accessibility: "no-public" }
     ],
+    "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-use-before-define": "off"
   }
 };
