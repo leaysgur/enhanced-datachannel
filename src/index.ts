@@ -1,6 +1,6 @@
-import BasedDataChannel from "./based-datachannel";
-import PromisedDataChannel from "./promised-datachannel";
-import ChunkedDataChannel from "./chunked-datachannel";
+import BasedDC from "./based-datachannel";
+import PromisedDC from "./promised-datachannel";
+import ChunkedDC from "./chunked-datachannel";
 import $debug from "debug";
 
 const debug = $debug("enhanced-dc");
@@ -9,7 +9,7 @@ export function based(dc: RTCDataChannel) {
   if (dc instanceof RTCDataChannel === false) {
     throw new Error("Missing datachannel instance!");
   }
-  return new BasedDataChannel(dc);
+  return new BasedDC(dc);
 }
 
 export function promised(dc: RTCDataChannel) {
@@ -21,7 +21,7 @@ export function promised(dc: RTCDataChannel) {
   }
   // NOTE: should check dc.reliable or NOT here
   // but Safari does not have its property and no idea to know it...
-  return new PromisedDataChannel(dc);
+  return new PromisedDC(dc);
 }
 
 export function chunked(dc: RTCDataChannel) {
@@ -37,9 +37,9 @@ export function chunked(dc: RTCDataChannel) {
   }
   // NOTE: should check dc.reliable or NOT here
   // but Safari does not have its property and no idea to know it...
-  return new ChunkedDataChannel(dc);
+  return new ChunkedDC(dc);
 }
 
-export type BasedDataChannel = InstanceType<typeof BasedDataChannel>;
-export type PromisedDataChannel = InstanceType<typeof PromisedDataChannel>;
-export type ChunkedDataChannel = InstanceType<typeof ChunkedDataChannel>;
+export type BasedDataChannel = InstanceType<typeof BasedDC>;
+export type PromisedDataChannel = InstanceType<typeof PromisedDC>;
+export type ChunkedDataChannel = InstanceType<typeof ChunkedDC>;
